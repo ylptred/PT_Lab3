@@ -11,7 +11,7 @@ package sorting
  */
 trait Data {
 
-  val hash: Int
+  val hash: Long
   val serviceName: String
   val price: Int
   val deadline: Int
@@ -88,4 +88,4 @@ trait Data {
  * @param subprice: Int - Размер предоплаты в рублях
  * @return
  */
-class DataClass(val hash: Int = 0, val serviceName: String, val price: Int, val deadline: Int, val subprice: Int) extends Data
+class DataClass(val hash: Long = 0, val serviceName: String, val price: Int, val deadline: Int, val subprice: Int) extends Data

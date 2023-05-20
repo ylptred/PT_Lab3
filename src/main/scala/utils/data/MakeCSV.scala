@@ -5,6 +5,7 @@ import scala.collection.mutable.ListBuffer
 import scala.jdk.CollectionConverters._
 import scala.util.Random
 import au.com.bytecode.opencsv.CSVWriter
+import hash.HashFuncs
 import hash.HashFuncs._
 
 import scala.io.BufferedSource
@@ -58,7 +59,7 @@ object MakeCSV {
       var listOfRecords = new ListBuffer[Array[String]]()
       listOfRecords += csvFields
       for (i <- 0 until select.toInt) {
-        listOfRecords += Array("1", servicesList(i), prices(i).toString, deadlines(i).toString, subprices(i).toString)
+        listOfRecords += Array(HashFuncs.simpleHash(servicesList(i)).toString, servicesList(i), prices(i).toString, deadlines(i).toString, subprices(i).toString)
       }
       csvWriter.writeAll(listOfRecords.toList.asJava)
       outputFile.close()

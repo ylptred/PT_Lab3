@@ -10,7 +10,6 @@ import scala.jdk.CollectionConverters._
 import scala.util.Random
 import au.com.bytecode.opencsv.CSVWriter
 import hash.HashFuncs
-import utils.Timer._
 
 import java.util.concurrent.TimeUnit
 import scala.io.BufferedSource
@@ -48,7 +47,7 @@ object Main {
       val data_source: BufferedSource = io.Source.fromFile(s"src/main/resources/gendata/$selection.csv")
       for (line <- data_source.getLines.drop(1)) {
         val splittedLine: Array[String] = line.split(",")
-        val DataObject: Data = new DataClass(splittedLine(0).drop(1).dropRight(1).toInt, splittedLine(1).drop(1).dropRight(1), splittedLine(2).drop(1).dropRight(1).toInt,
+        val DataObject: Data = new DataClass(splittedLine(0).drop(1).dropRight(1).toLong, splittedLine(1).drop(1).dropRight(1), splittedLine(2).drop(1).dropRight(1).toInt,
           splittedLine(3).drop(1).dropRight(1).toInt,
           splittedLine(4).drop(1).dropRight(1).toInt)
         data_arr = data_arr :+ DataObject
@@ -60,7 +59,7 @@ object Main {
       println(s"---start simple $selection---")
       for (service <- servicesListTMP) {
         val t0 = System.nanoTime()
-        HashFuncs.hashGet(map_simple, service, "simple")
+        HashFuncs.hashGet(service, "simple")
         val t1 = System.nanoTime()
         println(s"[simple]  Elapsed time: " + (t1 - t0) + "ns    " + TimeUnit.MILLISECONDS.convert((t1 - t0), TimeUnit.NANOSECONDS)
           + "ms    " + TimeUnit.SECONDS.convert(TimeUnit.MILLISECONDS.convert((t1 - t0), TimeUnit.NANOSECONDS), TimeUnit.MILLISECONDS) + "s")
@@ -71,7 +70,7 @@ object Main {
       println(s"---start hard $selection---")
       for (service <- servicesListTMP) {
         val t0 = System.nanoTime()
-        HashFuncs.hashGet(map_hard, service, "hard")
+        HashFuncs.hashGet(service, "hard")
         val t1 = System.nanoTime()
         println(s"[hard]  Elapsed time: " + (t1 - t0) + "ns    " + TimeUnit.MILLISECONDS.convert((t1 - t0), TimeUnit.NANOSECONDS)
           + "ms    " + TimeUnit.SECONDS.convert(TimeUnit.MILLISECONDS.convert((t1 - t0), TimeUnit.NANOSECONDS), TimeUnit.MILLISECONDS) + "s")
