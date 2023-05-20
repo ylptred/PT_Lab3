@@ -58,7 +58,7 @@ object MakeCSV {
       var listOfRecords = new ListBuffer[Array[String]]()
       listOfRecords += csvFields
       for (i <- 0 until select.toInt) {
-        listOfRecords += Array(simpleHash(servicesList(i)).toString, servicesList(i), prices(i).toString, deadlines(i).toString, subprices(i).toString)
+        listOfRecords += Array("1", servicesList(i), prices(i).toString, deadlines(i).toString, subprices(i).toString)
       }
       csvWriter.writeAll(listOfRecords.toList.asJava)
       outputFile.close()
