@@ -6,10 +6,7 @@ import sorting.Main.map_hard
 
 object HashFuncs {
 
-  def adjust[A, B](m: Map[A, B], k: A)(f: B => B): Map[A, B] = m.updated(k, f(m(k)))
-
   var res: Array[Data] = Array.empty[Data]
-
 
   /**
    * djb hash function
@@ -42,6 +39,12 @@ object HashFuncs {
     hash
   }
 
+  /**
+   * добавление элемента в хэш таблицу
+   *
+   * @param obj - объект типа Data
+   * @param hash_func - тип хэширования
+   */
   def hashAdd(obj: Data, hash_func: String): Unit = {
     if (hash_func == "simple") {
       val hash_s: Long = simpleHash(obj.serviceName)
@@ -64,13 +67,25 @@ object HashFuncs {
     }
   }
 
+  /**
+   * Проход по массиву с коллизией
+   *
+   * @param data - элемент типа Data
+   * @param key - ключ, по которому ищем
+   */
   def GET(data: Data, key: String): Unit = {
     if (data.serviceName == key) {
       res = res :+ data
     }
   }
 
-  def hashGet(hashMap: Map[Long, Array[Data]], key: String, hash_func: String): Unit = {
+  /**
+   * Функция получения элемента из хэш таблицы
+   *
+   * @param key - ключ, по которому ищем
+   * @param hash_func - тип хэширования
+   */
+  def hashGet(key: String, hash_func: String): Unit = {
     if (hash_func == "simple") {
       for (i <- map_simple(simpleHash(key))) {
         GET(i, key)
@@ -82,6 +97,12 @@ object HashFuncs {
     }
   }
 
+  /**
+   * Функция для подсчета коллизий
+   *
+   * @param hashMap - хэш таблица
+   * @return - возвращается количество коллизий
+   */
   def collisions(hashMap: Map[Long, Array[Data]]): Long = {
     var counter = 0
     for (i <- hashMap.values) {
